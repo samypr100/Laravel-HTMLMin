@@ -183,8 +183,11 @@ class HTMLMinServiceProvider extends ServiceProvider
             $files = $app['files'];
             $storagePath = $app->config->get('view.compiled');
             $ignoredPaths = $app->config->get('htmlmin.ignore', []);
-
-            return new MinifyCompiler($blade, $files, $storagePath, $ignoredPaths, $this->previousCompiler, $this->previousCompiler->getCustomDirectives());
+            $customDirectives = [];
+            if ($this->previousCompiler != null) {
+                $customDirectives = $this->previousCompiler->getCustomDirectives();
+            }
+            return new MinifyCompiler($blade, $files, $storagePath, $ignoredPaths, $this->previousCompiler, $customDirectives);
         });
 
         $this->app->alias('htmlmin.compiler', MinifyCompiler::class);

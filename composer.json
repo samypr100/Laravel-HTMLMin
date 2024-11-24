@@ -1,6 +1,6 @@
 {
     "name": "htmlmin/htmlmin",
-    "description": "HTMLMin Is A Simple HTML Minifier For Laravel 5",
+    "description": "HTMLMin Is A Simple HTML Minifier For Laravel 8+",
     "keywords": ["laravel", "framework", "html minifier", "html", "minifier", "HTMLMin", "Laravel HTMLMin", "Laravel-HTMLMin"],
     "license": "MIT",
     "authors": [
@@ -11,22 +11,26 @@
         {
             "name": "Raza Mehdi",
             "email": "srmk@outlook.com"
+        },
+        {
+            "name": "samypr100",
+            "email": "3933065+samypr100@users.noreply.github.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/filesystem": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/http": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/routing": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/view": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-        "mrclay/minify": "^2.2|^3.0"
+        "php": ">=7.4",
+        "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/filesystem": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/http": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/routing": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/view": "^8.0|^9.0|^10.0|^11.0",
+        "mrclay/minify": "^3.0|^4.0"
     },
     "require-dev": {
-        "graham-campbell/testbench": "^3.1|^4.0|^5.0",
-        "mockery/mockery": "^0.9.4|^1.0",
-        "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0|^8.0|^9.0"
+        "graham-campbell/testbench": "^6.0",
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^9.0|^10.0"
     },
     "autoload": {
         "psr-4": {
@@ -42,9 +46,6 @@
         "preferred-install": "dist"
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "5.0-dev"
-        },
         "laravel": {
           "providers": [
             "HTMLMin\\HTMLMin\\HTMLMinServiceProvider"
