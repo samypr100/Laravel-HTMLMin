@@ -19,6 +19,7 @@ use HTMLMin\HTMLMin\Minifiers\CssMinifier;
 use HTMLMin\HTMLMin\Minifiers\HtmlMinifier;
 use HTMLMin\HTMLMin\Minifiers\JsMinifier;
 use Mockery;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * This is the htmlmin test class.
@@ -27,7 +28,7 @@ use Mockery;
  */
 class HTMLMinTest extends AbstractTestBenchTestCase
 {
-    public function methodProvider()
+    public static function methodProvider()
     {
         return [
             ['blade', 'getBladeMinifier'],
@@ -40,6 +41,7 @@ class HTMLMinTest extends AbstractTestBenchTestCase
     /**
      * @dataProvider methodProvider
      */
+    #[DataProvider('methodProvider')]
     public function testMethods($method, $class)
     {
         $htmlmin = $this->getHTMLMin();

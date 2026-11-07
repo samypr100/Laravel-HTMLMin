@@ -11,24 +11,30 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0', '8.1', '8.2', '8.3']
+        php-versions: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
     - name: Setup PHP with Composer and extensions
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
+        coverage: xdebug
     - name: Get Composer Cache Directory
       id: composer-cache
       run: |
         echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-    - uses: actions/cache@v4
+    - uses: actions/cache@v6
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ matrix.php-versions }}-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-composer-${{ matrix.php-versions }}-
+    # Laravel 8-10 (the only versions installable on PHP < 8.2) are EOL and have
+    # security advisories, which Composer blocks by default during resolution.
+    - name: Allow EOL Laravel versions on legacy PHP
+      if: contains(fromJSON('["7.4", "8.0", "8.1"]'), matrix.php-versions)
+      run: composer config policy.advisories.block false
     - name: Install Composer dependencies
       env:
         PHP_VERSION: ${{ matrix.php-versions }}
@@ -36,5 +42,9 @@ jobs:
     - name: Run tests with code coverage
       env:
         PHP_VERSION: ${{ matrix.php-versions }}
-      run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-      continue-on-error: true
+      # PHPUnit 9 needs its own config; 10+ uses the default phpunit.xml.dist.
+      run: |
+        major=$(php -r 'require "vendor/autoload.php"; echo explode(".", PHPUnit\Runner\Version::id())[0];')
+        config=phpunit.xml.dist
+        if [ "$major" -lt 10 ]; then config=phpunit9.xml.dist; fi
+        vendor/bin/phpunit -c "$config" --coverage-clover build/logs/clover.xml
